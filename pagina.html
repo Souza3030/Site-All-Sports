@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Camisas Esportivas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .product-card:hover { transform: translateY(-4px); }
+        .cart-badge { animation: bounce 0.5s ease-in-out; }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-900">All Sports</h1>
+                    <span class="ml-2 text-sm text-gray-600">Camisas Esportivas</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-800 hover:text-sky-400 font-medium">Início</a>
+                    <a href="#products" class="text-gray-800 hover:text-sky-400 font-medium">Produtos</a>
+                    <a href="#about" class="text-gray-800 hover:text-sky-400 font-medium">Sobre</a>
+                    <a href="#contact" class="text-gray-800 hover:text-sky-400 font-medium">Contato</a>
+                </nav>
+                <button onclick="toggleCart()" class="relative bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                    🛒 Carrinho
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center cart-badge hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-gradient-to-r from-gray-900 to-sky-300 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-5xl font-bold mb-6">Camisas Esportivas de Qualidade</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Encontre as melhores camisas dos seus times favoritos com qualidade premium e preços incríveis</p>
+            <button onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})" class="bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                Ver Produtos
+            </button>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-3xl font-bold text-center mb-12 text-gray-800">Nossos Produtos</h3>
+            
+            <!-- Filter Buttons -->
+            <div class="flex justify-center mb-8 space-x-2 flex-wrap gap-2">
+                <button onclick="filterProducts('all')" class="filter-btn bg-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors">🌍 Todos</button>
+                <button onclick="filterProducts('brasil')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🇧🇷 Brasil</button>
+                <button onclick="filterProducts('espanha')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🇪🇸 Espanha</button>
+                <button onclick="filterProducts('inglaterra')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra</button>
+                <button onclick="filterProducts('alemanha')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🇩🇪 Alemanha</button>
+                <button onclick="filterProducts('italia')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🇮🇹 Itália</button>
+                <button onclick="filterProducts('franca')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🇫🇷 França</button>
+                <button onclick="filterProducts('portugal')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🇵🇹 Portugal</button>
+                <button onclick="filterProducts('holanda')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🇳🇱 Holanda</button>
+                <button onclick="filterProducts('belgica')" class="filter-btn bg-sky-100 text-gray-800 px-6 py-2 rounded-lg hover:bg-sky-200 transition-colors">🇧🇪 Bélgica</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Products will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-3xl font-bold mb-8 text-gray-800">Sobre a All Sports</h3>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+                    Aqui, cada detalhe foi pensado para oferecer mais que produtos: queremos te entregar qualidade, bom atendimento e uma experiência que você vai querer repetir.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <div class="text-center">
+                        <div class="bg-sky-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🏆</span>
+                        </div>
+                        <h4 class="font-semibold mb-2">Qualidade Premium</h4>
+                        <p class="text-gray-600">Produtos de alta qualidade</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-sky-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🚚</span>
+                        </div>
+                        <h4 class="font-semibold mb-2">Entrega Rápida</h4>
+                        <p class="text-gray-600">Entregas</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-sky-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">💯</span>
+                        </div>
+                        <h4 class="font-semibold mb-2">Qualidade</h4>
+                        <p class="text-gray-600">Produtos de alta qualidade</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-gray-100 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-3xl font-bold mb-8 text-gray-800">Entre em Contato</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <span class="text-3xl mb-4 block">📧</span>
+                        <h4 class="font-semibold mb-2">Email</h4>
+                        <p class="text-gray-600">caioaldrin@gmail.com</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <span class="text-3xl mb-4 block">📱</span>
+                        <h4 class="font-semibold mb-2">WhatsApp</h4>
+                        <p class="text-gray-600">(81)996890017</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <span class="text-3xl mb-4 block">📍</span>
+                        <h4 class="font-semibold mb-2">Endereço</h4>
+                        <p class="text-gray-600">Caruaru, PE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Carrinho de Compras</h3>
+                        <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">✕</button>
+                    </div>
+                    <div id="cart-items" class="space-y-4">
+                        <p class="text-gray-500 text-center py-8">Seu carrinho está vazio</p>
+                    </div>
+                    <div id="cart-total" class="border-t pt-4 mt-4 hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="font-semibold">Total: R$ <span id="total-amount">0,00</span></span>
+                        </div>
+                        <button onclick="checkout()" class="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition-colors">
+                            Pagar com PIX
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PIX Payment Modal -->
+    <div id="pix-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-md w-full">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold">Pagamento PIX</h3>
+                        <button onclick="closePixModal()" class="text-gray-500 hover:text-gray-700">✕</button>
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                            <p class="text-sm text-gray-600 mb-2">Total a pagar:</p>
+                            <p class="text-2xl font-bold text-green-600">R$ <span id="pix-total">0,00</span></p>
+                        </div>
+                    </div>
+
+                    <!-- QR Code -->
+                    <div class="text-center mb-6">
+                        <div class="bg-white border-2 border-gray-200 p-4 rounded-lg inline-block mb-4">
+                            <div id="qr-code" class="w-48 h-48 bg-gray-100 flex items-center justify-center text-gray-500">
+                                <div class="text-center">
+                                    <div class="text-4xl mb-2">📱</div>
+                                    <p class="text-sm">QR Code PIX</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">Escaneie o QR Code com seu banco</p>
+                    </div>
+
+                    <!-- PIX Copy and Paste -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Ou copie o código PIX:
+                        </label>
+                        <div class="flex">
+                            <input 
+                                type="text" 
+                                id="pix-code" 
+                                readonly 
+                                class="flex-1 p-3 border border-gray-300 rounded-l-lg bg-gray-50 text-sm"
+                                value=""
+                            >
+                            <button 
+                                onclick="copyPixCode()" 
+                                class="bg-gray-900 text-white px-4 py-3 rounded-r-lg hover:bg-gray-800 transition-colors"
+                            >
+                                Copiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Instructions -->
+                    <div class="bg-sky-50 p-4 rounded-lg mb-6">
+                        <h4 class="font-semibold text-gray-800 mb-2">Como pagar:</h4>
+                        <ol class="text-sm text-gray-700 space-y-1">
+                            <li>1. Abra o app do seu banco</li>
+                            <li>2. Escaneie o QR Code ou cole o código PIX</li>
+                            <li>3. Confirme o pagamento</li>
+                            <li>4. Clique em "Já paguei" abaixo</li>
+                        </ol>
+                    </div>
+
+                    <!-- Payment Confirmation -->
+                    <div class="space-y-3">
+                        <button 
+                            onclick="confirmPayment()" 
+                            class="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
+                        >
+                            ✅ Já paguei
+                        </button>
+                        <button 
+                            onclick="closePixModal()" 
+                            class="w-full bg-sky-100 text-gray-800 py-3 rounded-lg hover:bg-sky-200 transition-colors"
+                        >
+                            Cancelar
+                        </button>
+                    </div>
+
+                    <!-- Payment Details -->
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <p class="text-xs text-gray-500 text-center">
+                            Chave PIX: 117.472.384-06<br>
+                            All Sports - Camisas Esportivas
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 All Sports - Camisas Esportivas. Todos os direitos reservados - Guilherme de Souza.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Products data with working jersey images
+        const products = [
+            // Brasil 2025
+            {id: 1, name: "Seleção Brasileira Home 2025", price: 149.90, category: "brasil"},
+            {id: 2, name: "Seleção Brasileira Away 2025", price: 149.90, category: "brasil"},
+            {id: 3, name: "Flamengo Home 2025", price: 89.90, category: "brasil"},
+            {id: 4, name: "Flamengo Away 2025", price: 89.90, category: "brasil"},
+            {id: 5, name: "Palmeiras Home 2025", price: 85.90, category: "brasil"},
+            {id: 6, name: "Palmeiras Away 2025", price: 85.90, category: "brasil"},
+            {id: 7, name: "Corinthians Home 2025", price: 82.90, category: "brasil"},
+            {id: 8, name: "Corinthians Away 2025", price: 82.90, category: "brasil"},
+            {id: 9, name: "São Paulo Home 2025", price: 84.90, category: "brasil"},
+            {id: 10, name: "São Paulo Away 2025", price: 84.90, category: "brasil"},
+            {id: 11, name: "Santos Home 2025", price: 79.90, category: "brasil"},
+            {id: 12, name: "Vasco Home 2025", price: 78.90, category: "brasil"},
+            
+            // Espanha 2025
+            {id: 13, name: "Real Madrid Home 2025", price: 159.90, category: "espanha"},
+            {id: 14, name: "Real Madrid Away 2025", price: 159.90, category: "espanha"},
+            {id: 15, name: "Real Madrid Third 2025", price: 159.90, category: "espanha"},
+            {id: 16, name: "Barcelona Home 2025", price: 154.90, category: "espanha"},
+            {id: 17, name: "Barcelona Away 2025", price: 154.90, category: "espanha"},
+            {id: 18, name: "Barcelona Third 2025", price: 154.90, category: "espanha"},
+            {id: 19, name: "Atlético Madrid Home 2025", price: 139.90, category: "espanha"},
+            {id: 20, name: "Atlético Madrid Away 2025", price: 139.90, category: "espanha"},
+            {id: 21, name: "Sevilla Home 2025", price: 119.90, category: "espanha"},
+            {id: 22, name: "Valencia Home 2025", price: 109.90, category: "espanha"},
+            {id: 23, name: "Real Sociedad Home 2025", price: 114.90, category: "espanha"},
+            {id: 24, name: "Villarreal Home 2025", price: 112.90, category: "espanha"},
+            {id: 25, name: "Athletic Bilbao Home 2025", price: 109.90, category: "espanha"},
+            {id: 26, name: "Real Betis Home 2025", price: 104.90, category: "espanha"},
+            {id: 27, name: "Celta Vigo Home 2025", price: 99.90, category: "espanha"},
+            {id: 28, name: "Espanyol Home 2025", price: 94.90, category: "espanha"},
+            
+            // Inglaterra 2025
+            {id: 29, name: "Manchester United Home 2025", price: 164.90, category: "inglaterra"},
+            {id: 30, name: "Manchester United Away 2025", price: 164.90, category: "inglaterra"},
+            {id: 31, name: "Manchester United Third 2025", price: 164.90, category: "inglaterra"},
+            {id: 32, name: "Manchester City Home 2025", price: 169.90, category: "inglaterra"},
+            {id: 33, name: "Manchester City Away 2025", price: 169.90, category: "inglaterra"},
+            {id: 34, name: "Liverpool Home 2025", price: 159.90, category: "inglaterra"},
+            {id: 35, name: "Liverpool Away 2025", price: 159.90, category: "inglaterra"},
+            {id: 36, name: "Arsenal Home 2025", price: 154.90, category: "inglaterra"},
+            {id: 37, name: "Arsenal Away 2025", price: 154.90, category: "inglaterra"},
+            {id: 38, name: "Chelsea Home 2025", price: 149.90, category: "inglaterra"},
+            {id: 39, name: "Chelsea Away 2025", price: 149.90, category: "inglaterra"},
+            {id: 40, name: "Tottenham Home 2025", price: 144.90, category: "inglaterra"},
+            {id: 41, name: "Newcastle United Home 2025", price: 139.90, category: "inglaterra"},
+            {id: 42, name: "Aston Villa Home 2025", price: 134.90, category: "inglaterra"},
+            {id: 43, name: "West Ham Home 2025", price: 129.90, category: "inglaterra"},
+            {id: 44, name: "Leicester City Home 2025", price: 124.90, category: "inglaterra"},
+            
+            // Alemanha 2025
+            {id: 45, name: "Bayern Munich Home 2025", price: 164.90, category: "alemanha"},
+            {id: 46, name: "Bayern Munich Away 2025", price: 164.90, category: "alemanha"},
+            {id: 47, name: "Bayern Munich Third 2025", price: 164.90, category: "alemanha"},
+            {id: 48, name: "Borussia Dortmund Home 2025", price: 149.90, category: "alemanha"},
+            {id: 49, name: "Borussia Dortmund Away 2025", price: 149.90, category: "alemanha"},
+            {id: 50, name: "RB Leipzig Home 2025", price: 134.90, category: "alemanha"},
+            {id: 51, name: "RB Leipzig Away 2025", price: 134.90, category: "alemanha"},
+            {id: 52, name: "Bayer Leverkusen Home 2025", price: 129.90, category: "alemanha"},
+            {id: 53, name: "Bayer Leverkusen Away 2025", price: 129.90, category: "alemanha"},
+            {id: 54, name: "Eintracht Frankfurt Home 2025", price: 124.90, category: "alemanha"},
+            {id: 55, name: "Schalke 04 Home 2025", price: 119.90, category: "alemanha"},
+            {id: 56, name: "Werder Bremen Home 2025", price: 114.90, category: "alemanha"},
+            {id: 57, name: "Borussia Mönchengladbach Home 2025", price: 119.90, category: "alemanha"},
+            {id: 58, name: "VfB Stuttgart Home 2025", price: 114.90, category: "alemanha"},
+            
+            // Itália 2025
+            {id: 59, name: "Juventus Home 2025", price: 159.90, category: "italia"},
+            {id: 60, name: "Juventus Away 2025", price: 159.90, category: "italia"},
+            {id: 61, name: "Juventus Third 2025", price: 159.90, category: "italia"},
+            {id: 62, name: "AC Milan Home 2025", price: 154.90, category: "italia"},
+            {id: 63, name: "AC Milan Away 2025", price: 154.90, category: "italia"},
+            {id: 64, name: "Inter Milan Home 2025", price: 154.90, category: "italia"},
+            {id: 65, name: "Inter Milan Away 2025", price: 154.90, category: "italia"},
+            {id: 66, name: "AS Roma Home 2025", price: 139.90, category: "italia"},
+            {id: 67, name: "AS Roma Away 2025", price: 139.90, category: "italia"},
+            {id: 68, name: "Napoli Home 2025", price: 144.90, category: "italia"},
+            {id: 69, name: "Napoli Away 2025", price: 144.90, category: "italia"},
+            {id: 70, name: "Lazio Home 2025", price: 129.90, category: "italia"},
+            {id: 71, name: "Atalanta Home 2025", price: 124.90, category: "italia"},
+            {id: 72, name: "Fiorentina Home 2025", price: 119.90, category: "italia"},
+            {id: 73, name: "Torino Home 2025", price: 109.90, category: "italia"},
+            {id: 74, name: "Sampdoria Home 2025", price: 104.90, category: "italia"},
+            
+            // França 2025
+            {id: 75, name: "Paris Saint-Germain Home 2025", price: 169.90, category: "franca"},
+            {id: 76, name: "Paris Saint-Germain Away 2025", price: 169.90, category: "franca"},
+            {id: 77, name: "Paris Saint-Germain Third 2025", price: 169.90, category: "franca"},
+            {id: 78, name: "Olympique Marseille Home 2025", price: 139.90, category: "franca"},
+            {id: 79, name: "Olympique Marseille Away 2025", price: 139.90, category: "franca"},
+            {id: 80, name: "Olympique Lyon Home 2025", price: 134.90, category: "franca"},
+            {id: 81, name: "Olympique Lyon Away 2025", price: 134.90, category: "franca"},
+            {id: 82, name: "AS Monaco Home 2025", price: 129.90, category: "franca"},
+            {id: 83, name: "AS Monaco Away 2025", price: 129.90, category: "franca"},
+            {id: 84, name: "Lille OSC Home 2025", price: 119.90, category: "franca"},
+            {id: 85, name: "OGC Nice Home 2025", price: 114.90, category: "franca"},
+            {id: 86, name: "Stade Rennais Home 2025", price: 109.90, category: "franca"},
+            {id: 87, name: "RC Strasbourg Home 2025", price: 104.90, category: "franca"},
+            {id: 88, name: "Montpellier HSC Home 2025", price: 99.90, category: "franca"},
+            
+            // Portugal 2025
+            {id: 89, name: "FC Porto Home 2025", price: 134.90, category: "portugal"},
+            {id: 90, name: "FC Porto Away 2025", price: 134.90, category: "portugal"},
+            {id: 91, name: "Benfica Home 2025", price: 139.90, category: "portugal"},
+            {id: 92, name: "Benfica Away 2025", price: 139.90, category: "portugal"},
+            {id: 93, name: "Sporting CP Home 2025", price: 134.90, category: "portugal"},
+            {id: 94, name: "Sporting CP Away 2025", price: 134.90, category: "portugal"},
+            {id: 95, name: "SC Braga Home 2025", price: 119.90, category: "portugal"},
+            {id: 96, name: "Vitória Guimarães Home 2025", price: 109.90, category: "portugal"},
+            {id: 97, name: "Boavista Home 2025", price: 99.90, category: "portugal"},
+            {id: 98, name: "Moreirense Home 2025", price: 94.90, category: "portugal"},
+            
+            // Holanda 2025
+            {id: 99, name: "Ajax Home 2025", price: 144.90, category: "holanda"},
+            {id: 100, name: "Ajax Away 2025", price: 144.90, category: "holanda"},
+            {id: 101, name: "PSV Eindhoven Home 2025", price: 139.90, category: "holanda"},
+            {id: 102, name: "PSV Eindhoven Away 2025", price: 139.90, category: "holanda"},
+            {id: 103, name: "Feyenoord Home 2025", price: 134.90, category: "holanda"},
+            {id: 104, name: "Feyenoord Away 2025", price: 134.90, category: "holanda"},
+            {id: 105, name: "AZ Alkmaar Home 2025", price: 119.90, category: "holanda"},
+            {id: 106, name: "FC Utrecht Home 2025", price: 109.90, category: "holanda"},
+            {id: 107, name: "Vitesse Home 2025", price: 104.90, category: "holanda"},
+            {id: 108, name: "FC Twente Home 2025", price: 99.90, category: "holanda"},
+            
+            // Bélgica 2025
+            {id: 109, name: "Club Brugge Home 2025", price: 124.90, category: "belgica"},
+            {id: 110, name: "Club Brugge Away 2025", price: 124.90, category: "belgica"},
+            {id: 111, name: "Anderlecht Home 2025", price: 119.90, category: "belgica"},
+            {id: 112, name: "Anderlecht Away 2025", price: 119.90, category: "belgica"},
+            {id: 113, name: "Standard Liège Home 2025", price: 109.90, category: "belgica"},
+            {id: 114, name: "KRC Genk Home 2025", price: 104.90, category: "belgica"},
+            {id: 115, name: "Royal Antwerp Home 2025", price: 99.90, category: "belgica"},
+            {id: 116, name: "KAA Gent Home 2025", price: 94.90, category: "belgica"}
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+        });
+
+        // Get team logo
+        function getTeamLogo(teamName) {
+            const logos = {
+                // Brasil
+                'Seleção Brasileira': '🇧🇷',
+                'Flamengo': '🔴⚫',
+                'Palmeiras': '🟢⚪',
+                'Corinthians': '⚫⚪',
+                'São Paulo': '🔴⚫⚪',
+                'Santos': '⚪⚫',
+                'Vasco': '⚫⚪',
+                
+                // Espanha
+                'Real Madrid': '👑⚪',
+                'Barcelona': '🔵🔴',
+                'Atlético Madrid': '🔴⚪',
+                'Sevilla': '🔴⚪',
+                'Valencia': '🟠⚫',
+                'Real Sociedad': '🔵⚪',
+                'Villarreal': '🟡',
+                'Athletic Bilbao': '🔴⚪',
+                'Real Betis': '🟢⚪',
+                'Celta Vigo': '🔵⚪',
+                'Espanyol': '🔵⚪',
+                
+                // Inglaterra
+                'Manchester United': '🔴',
+                'Manchester City': '🔵',
+                'Liverpool': '🔴',
+                'Arsenal': '🔴⚪',
+                'Chelsea': '🔵',
+                'Tottenham': '⚪🔵',
+                'Newcastle United': '⚫⚪',
+                'Aston Villa': '🟣🔵',
+                'West Ham': '🟤🔵',
+                'Leicester City': '🔵⚪',
+                
+                // Alemanha
+                'Bayern Munich': '🔴⚪',
+                'Borussia Dortmund': '🟡⚫',
+                'RB Leipzig': '🔴⚪',
+                'Bayer Leverkusen': '🔴⚫',
+                'Eintracht Frankfurt': '🔴⚫⚪',
+                'Schalke 04': '🔵⚪',
+                'Werder Bremen': '🟢⚪',
+                'Borussia Mönchengladbach': '⚫⚪🟢',
+                'VfB Stuttgart': '🔴⚪',
+                
+                // Itália
+                'Juventus': '⚫⚪',
+                'AC Milan': '🔴⚫',
+                'Inter Milan': '🔵⚫',
+                'AS Roma': '🔴🟡',
+                'Napoli': '🔵',
+                'Lazio': '🔵⚪',
+                'Atalanta': '🔵⚫',
+                'Fiorentina': '🟣',
+                'Torino': '🟤',
+                'Sampdoria': '🔵⚪🔴',
+                
+                // França
+                'Paris Saint-Germain': '🔵🔴',
+                'Olympique Marseille': '🔵⚪',
+                'Olympique Lyon': '🔵⚪🔴',
+                'AS Monaco': '🔴⚪',
+                'Lille OSC': '🔴⚪',
+                'OGC Nice': '🔴⚫',
+                'Stade Rennais': '🔴⚫',
+                'RC Strasbourg': '🔵⚪',
+                'Montpellier HSC': '🔵🟠',
+                
+                // Portugal
+                'FC Porto': '🔵⚪',
+                'Benfica': '🔴⚪',
+                'Sporting CP': '🟢⚪',
+                'SC Braga': '🔴⚪',
+                'Vitória Guimarães': '⚪🔵',
+                'Boavista': '⚫⚪',
+                'Moreirense': '🟢⚪',
+                
+                // Holanda
+                'Ajax': '🔴⚪',
+                'PSV Eindhoven': '🔴⚪',
+                'Feyenoord': '🔴⚪',
+                'AZ Alkmaar': '🔴⚪',
+                'FC Utrecht': '🔴⚪',
+                'Vitesse': '🟡⚫',
+                'FC Twente': '🔴⚪',
+                
+                // Bélgica
+                'Club Brugge': '🔵⚫',
+                'Anderlecht': '🟣⚪',
+                'Standard Liège': '🔴⚪',
+                'KRC Genk': '🔵⚪',
+                'Royal Antwerp': '🔴⚪',
+                'KAA Gent': '🔵⚪'
+            };
+            
+            const teamKey = Object.keys(logos).find(key => teamName.includes(key));
+            return teamKey ? logos[teamKey] : '⚽';
+        }
+
+        // Render products
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const filteredProducts = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
+            
+            grid.innerHTML = filteredProducts.map(product => {
+                const teamLogo = getTeamLogo(product.name);
+                return `
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg">
+                    <div class="h-32 bg-gradient-to-br from-sky-100 to-gray-100 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-3xl mb-2">${teamLogo}</div>
+                            <p class="text-sm text-gray-600 font-medium">${product.name.split(' ').slice(0, 2).join(' ')}</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-semibold text-lg mb-2">${product.name}</h4>
+                        <p class="text-2xl font-bold text-gray-900 mb-4">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // Filter products
+        function filterProducts(category) {
+            currentFilter = category;
+            renderProducts();
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-gray-900', 'text-white');
+                btn.classList.add('bg-sky-100', 'text-gray-800');
+            });
+            event.target.classList.remove('bg-sky-100', 'text-gray-800');
+            event.target.classList.add('bg-gray-900', 'text-white');
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartUI();
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const totalAmount = document.getElementById('total-amount');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            if (totalItems > 0) {
+                cartCount.textContent = totalItems;
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-8">Seu carrinho está vazio</p>';
+                cartTotal.classList.add('hidden');
+            } else {
+                cartItems.innerHTML = cart.map(item => {
+                    const teamLogo = getTeamLogo(item.name);
+                    return `
+                    <div class="flex items-center justify-between p-4 border rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-sky-100 rounded flex items-center justify-center">
+                                <span class="text-lg">${teamLogo}</span>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">${item.name}</h4>
+                                <p class="text-sm text-gray-600">Quantidade: ${item.quantity}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</p>
+                            <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 text-sm">Remover</button>
+                        </div>
+                    </div>
+                `}).join('');
+                cartTotal.classList.remove('hidden');
+                totalAmount.textContent = totalPrice.toFixed(2).replace('.', ',');
+            }
+        }
+
+        // Toggle cart modal
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Checkout function
+        function checkout() {
+            if (cart.length === 0) return;
+            
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('pix-total').textContent = totalPrice.toFixed(2).replace('.', ',');
+            
+            // Generate PIX code (simplified version)
+            const pixCode = generatePixCode(totalPrice);
+            document.getElementById('pix-code').value = pixCode;
+            
+            // Show PIX modal
+            document.getElementById('pix-modal').classList.remove('hidden');
+            toggleCart(); // Close cart modal
+        }
+
+        // Generate PIX code
+        function generatePixCode(amount) {
+            const pixKey = '117.472.384-06';
+            const merchantName = 'All Sports Camisas Esportivas';
+            const city = 'CARUARU';
+            const txId = 'TX' + Date.now().toString().slice(-8);
+            
+            // Simplified PIX code generation (in real implementation, use proper PIX library)
+            return `00020126580014BR.GOV.BCB.PIX0136${pixKey}0208${txId}5204000053039865802BR5925${merchantName}6009${city}62070503***6304`;
+        }
+
+        // Copy PIX code to clipboard
+        function copyPixCode() {
+            const pixCodeInput = document.getElementById('pix-code');
+            pixCodeInput.select();
+            pixCodeInput.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand('copy');
+                // Show feedback
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Copiado!';
+                button.classList.add('bg-green-600');
+                button.classList.remove('bg-gray-900');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('bg-green-600');
+                    button.classList.add('bg-gray-900');
+                }, 2000);
+            } catch (err) {
+                alert('Erro ao copiar. Selecione e copie manualmente.');
+            }
+        }
+
+        // Close PIX modal
+        function closePixModal() {
+            document.getElementById('pix-modal').classList.add('hidden');
+        }
+
+        // Confirm payment
+        function confirmPayment() {
+            // Show success message
+            alert('Pagamento confirmado! Obrigado pela sua compra. Você receberá um email com os detalhes do pedido.');
+            
+            // Clear cart
+            cart = [];
+            updateCartUI();
+            closePixModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('cart-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleCart();
+            }
+        });
+
+        // Close PIX modal when clicking outside
+        document.getElementById('pix-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePixModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b98b7d7587f61e',t:'MTc1NDU5ODc2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
